@@ -10,10 +10,5 @@ export default {
   components: {
     FoodStuff,
   },
-  computed: {
-    category() {
-      return this.$router.path;
-    },
-  },
 };
 </script>

@@ -1,4 +1,5 @@
 <template>
+  <AppFilters :brands="brands" />
   <!-- Food products -->
   <section class="flex w-full flex-wrap items-center gap-4">
     <BaseProduct v-for="(product, i) in products" :key="i" v-bind="product" />
@@ -7,12 +8,16 @@
 
 <script>
 import BaseProduct from "../components/UI/BaseProduct.vue";
+import AppFilters from "../components/filters/AppFilters.vue";
 export default {
   components: {
     BaseProduct,
+    AppFilters,
   },
   data() {
     return {
+      brands: ["ماهوند", "کاجینو", "فروشگاه جوان"],
+
       products: [
         {
           title: "گلاب درجه یک (ماهوند)",
@@ -51,6 +56,7 @@ export default {
       filtered: [],
     };
   },
+
   methods: {
     // !TESTING
     filterProducts() {
