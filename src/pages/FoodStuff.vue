@@ -1,5 +1,5 @@
 <template>
-  <AppFilters :brands="brands" @filter="filterProducts" />
+  <AppFilters @filter="filterProducts" />
   <!-- Food products -->
   <section class="flex w-full flex-wrap items-center gap-4">
     <BaseProduct
@@ -21,8 +21,7 @@ export default {
   },
   data() {
     return {
-      brands: ["ماهوند", "کاجینو", "فروشگاه جوان"],
-
+      filters: ["Brand", "AdsType"],
       products: [
         {
           title: "گلاب درجه یک (ماهوند)",
@@ -61,7 +60,11 @@ export default {
       filtered: [],
     };
   },
-
+  provide() {
+    return {
+      brands: this.brands,
+    };
+  },
   created() {
     this.filtered = [...this.products];
   },

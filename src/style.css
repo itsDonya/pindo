@@ -119,7 +119,7 @@ button:focus-visible {
 @layer components {
   /* Modals */
   .modal {
-    @apply absolute p-6 m-2 bg-white z-10 shadow-xl rounded-lg flex flex-col gap-4 items-start;
+    @apply absolute p-6 m-2 bg-white z-10 shadow-2xl rounded-lg flex flex-col gap-4 items-start top-12;
   }
   .modal .search-input {
     @apply text-sm border px-4 py-2 rounded-md focus:outline-none;
