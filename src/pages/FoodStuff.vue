@@ -1,8 +1,13 @@
 <template>
-  <AppFilters :brands="brands" />
+  <AppFilters :brands="brands" @filter="filterProducts" />
   <!-- Food products -->
   <section class="flex w-full flex-wrap items-center gap-4">
-    <BaseProduct v-for="(product, i) in products" :key="i" v-bind="product" />
+    <BaseProduct
+      v-for="(product, i) in filtered"
+      :key="i"
+      v-bind="product"
+      @filter="filterProducts"
+    />
   </section>
 </template>
 
@@ -57,27 +62,23 @@ export default {
     };
   },
 
+  created() {
+    this.filtered = [...this.products];
+  },
   methods: {
-    // !TESTING
-    filterProducts() {
-      // Make filtered products list empty
-      this.filtered.length = 0;
-
-      // Check if any product exist with the filters that come from router query
-      const filters = this.$route.query;
-      const keys = Object.keys(filters);
-
-      // Check if any filter exist
-      if (keys.length > 0) {
+    filterProducts(brands) {
+      // Check all of the products if it contains the selected brand or not
+      if (brands.length > 0) {
+        this.filtered.length = 0;
         this.products.forEach((prod) => {
-          for (let i in keys) {
-            const key = keys[i];
-            if (prod[key] == filters[key]) {
+          for (let i in brands) {
+            if (prod["brand"] === brands[i]) {
               this.filtered.push(prod);
             }
           }
         });
       } else {
+        // check if nothing selected, show all products
         this.filtered = [...this.products];
       }
     },

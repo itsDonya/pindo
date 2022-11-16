@@ -8,7 +8,21 @@
       />
       <p>دسته‌بندی‌های مواد غذایی</p>
     </base-filter>
-    <base-filter>برند</base-filter>
+
+    <!-- Brand modal -->
+    <base-filter>
+      <p @click="toggleBrandModal">برند</p>
+      <transition>
+        <keep-alive>
+          <BrandModal
+            v-if="modals.brand"
+            @filter="filter"
+            @toggle="toggleBrandModal"
+          />
+        </keep-alive>
+      </transition>
+    </base-filter>
+
     <base-filter>نوع آگهی</base-filter>
 
     <base-filter>وضعیت کالا</base-filter>
@@ -21,13 +35,34 @@
 
 <script>
 import BaseFilter from "./BaseFilter.vue";
+// Modals
+import BrandModal from "../modals/BrandModal.vue";
 export default {
+  data() {
+    return {
+      // Check modals are opened(true) or not(false)
+      modals: {
+        brand: false,
+        adsType: false,
+      },
+    };
+  },
   components: {
     BaseFilter,
+    BrandModal,
   },
   props: {
     brands: {
       type: Array,
+    },
+  },
+  methods: {
+    toggleBrandModal() {
+      this.modals.brand = !this.modals.brand;
+    },
+    filter(brands) {
+      this.$emit("filter", brands);
+      this.toggleBrandModal();
     },
   },
 };

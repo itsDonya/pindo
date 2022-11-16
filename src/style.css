@@ -95,7 +95,45 @@ button:focus-visible {
   }
 }
 
+/* Transition */
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(-3rem);
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.2s ease-in-out;
+}
+.v-enter-to,
+.v-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* Modals */
+  .modal {
+    @apply absolute p-6 m-2 bg-white z-10 shadow-xl rounded-lg flex flex-col gap-4 items-start;
+  }
+  .modal .search-input {
+    @apply text-sm border px-4 py-2 rounded-md focus:outline-none;
+  }
+  .modal .options-list {
+    @apply flex flex-col gap-2;
+  }
+  .modal .option {
+    @apply flex items-center gap-2 p-3.5 pr-1 cursor-pointer;
+  }
+  .modal .option-title {
+    @apply text-sm;
+  }
+  .modal .modal-button {
+    @apply bg-yellow-400 text-sm px-4 py-2 rounded focus:outline-none;
+  }
+}
