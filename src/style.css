@@ -125,12 +125,15 @@ button:focus-visible {
     @apply text-sm border px-4 py-2 rounded-md focus:outline-none;
   }
   .modal .options-list {
-    @apply flex flex-col gap-2;
+    @apply w-full flex flex-col gap-2;
   }
   .modal .option {
     @apply flex items-center gap-2 p-3.5 pr-1 cursor-pointer;
   }
-  .modal .option-title {
+  .modal .option input {
+    @apply cursor-pointer;
+  }
+  .modal .option span {
     @apply text-sm;
   }
   .modal .modal-button {

@@ -1,7 +1,5 @@
 <template>
   <section class="relative flex items-center gap-2 w-full p-4">
-    <!-- <FilterBrand @filter="filterBrands" />
-    <FilterAdsType @filter="filterTypes" /> -->
     <FilterBrand @filter="filterBrands" />
     <FilterAdsType @filter="filterTypes" />
   </section>
@@ -14,7 +12,7 @@ import FilterAdsType from "./FilterAdsType.vue";
 export default {
   data() {
     return {
-      filters: [{ brand: [] }, { adsType: [] }],
+      filters: { brand: [], adsType: [] },
     };
   },
   components: {

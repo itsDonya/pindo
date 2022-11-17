@@ -1,79 +1,36 @@
 <template>
-  <base-filter @click="toggleModal">برند</base-filter>
+  <base-filter id="filter-brand-btn" @click="toggleModal">برند</base-filter>
   <!-- Brands modal  -->
-  <transition>
-    <keep-alive>
-      <div class="modal" v-if="modalOpened">
-        <span>برند</span>
-        <div>
-          <input
-            type="text"
-            id="brand-search"
-            class="search-input"
-            placeholder="جستجوی برند"
-          />
-        </div>
-        <div class="options-list">
-          <div class="option">
-            <input
-              type="checkbox"
-              v-model="selectedBrands"
-              name="brand-name"
-              id="mahvand"
-              value="ماهوند"
-            />
-            <label for="mahvand" class="option-title">ماهوند</label>
-          </div>
-          <div class="option">
-            <input
-              type="checkbox"
-              v-model="selectedBrands"
-              name="brand-name"
-              id="cajino"
-              value="کاجینو"
-            />
-            <label for="cajino" class="option-title">کاجینو</label>
-          </div>
-          <div class="option">
-            <input
-              type="checkbox"
-              v-model="selectedBrands"
-              name="brand-name"
-              id="javan"
-              value="جوان"
-            />
-            <label for="javan" class="option-title">جوان</label>
-          </div>
-        </div>
-        <button @click="filterBrand" id="brand-submit" class="modal-button">
-          فیلتر کن
-        </button>
-      </div>
-    </keep-alive>
-  </transition>
+  <BaseModal
+    :isOpened="brandModalOpened"
+    filter-name="brand"
+    modal-title="برند"
+    :options="brands"
+    @toggle="toggleModal"
+    @selected="filterBrands"
+  />
 </template>
 
 <script>
 import BaseFilter from "../UI/BaseFilter.vue";
+import BaseModal from "../UI/BaseModal.vue";
 export default {
   data() {
     return {
-      modalOpened: false,
-      selectedBrands: [],
+      brandModalOpened: false,
     };
   },
+  inject: ["brands"],
   components: {
+    BaseModal,
     BaseFilter,
   },
   methods: {
     toggleModal() {
-      this.modalOpened = !this.modalOpened;
+      this.brandModalOpened = !this.brandModalOpened;
     },
-    filterBrand() {
-      // this.$route.query.push(brand: this.selectedBrands );
-      // this.$emit("filter");
-      this.$emit("filter", this.selectedBrands);
-      this.toggleModal();
+    filterBrands(brands) {
+      this.$emit("filter", brands);
     },
   },
 };

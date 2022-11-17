@@ -14,7 +14,6 @@
 <script>
 import BaseProduct from "../components/UI/BaseProduct.vue";
 import AppFilters from "../components/filters/AppFilters.vue";
-import { looseIndexOf } from "@vue/shared";
 export default {
   components: {
     BaseProduct,
@@ -22,7 +21,6 @@ export default {
   },
   data() {
     return {
-      filters: ["Brand", "AdsType"],
       products: [
         {
           title: "گلاب درجه یک (ماهوند)",
@@ -64,34 +62,57 @@ export default {
   provide() {
     return {
       brands: this.brands,
+      adsTypes: this.adsTypes,
     };
   },
   created() {
     this.filtered = [...this.products];
+  },
+  computed: {
+    brands() {
+      let brands = [];
+      this.products.forEach((prod) => {
+        const brand = prod.brand;
+        if (brands.indexOf(brand) === -1) {
+          brands.push(brand);
+        }
+      });
+      return brands;
+    },
+    adsTypes() {
+      let types = [];
+      this.products.forEach((prod) => {
+        const type = prod.adsType;
+        if (types.indexOf(type) === -1) {
+          types.push(type);
+        }
+      });
+      return types;
+    },
   },
   methods: {
     filterProducts(filters) {
       // Make filtered products list empty
       this.filtered.length = 0;
 
+      const keys = Object.keys(filters);
+
       this.products.forEach((prod) => {
-        // Check if any filter exist
-        if (filters.brand) {
-          if (filters.brand.includes(prod.brand)) {
-            // Check if the product haven't be added before, then push it
-            if (this.filtered.indexOf(prod) === -1) {
-              this.filtered.push(prod);
-            }
-          }
-        }
-        if (filters.adsType) {
-          if (filters.adsType.includes(prod.adsType)) {
-            if (this.filtered.indexOf(prod) === -1) {
-              this.filtered.push(prod);
+        for (let i in keys) {
+          // Identify keys: because they're gonna be compared with the same name keys in products
+          const key = keys[i];
+          if (filters[key]) {
+            if (filters[key].includes(prod[key])) {
+              // Check if the product haven't be added before, then push it
+              if (this.filtered.indexOf(prod) === -1) {
+                this.filtered.push(prod);
+              }
             }
           }
         }
       });
+
+      // If nothing selected, show all products
       if (this.filtered.length === 0) {
         this.filtered = [...this.products];
       }
