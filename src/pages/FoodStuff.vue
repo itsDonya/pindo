@@ -14,6 +14,7 @@
 <script>
 import BaseProduct from "../components/UI/BaseProduct.vue";
 import AppFilters from "../components/filters/AppFilters.vue";
+import { looseIndexOf } from "@vue/shared";
 export default {
   components: {
     BaseProduct,
@@ -69,19 +70,29 @@ export default {
     this.filtered = [...this.products];
   },
   methods: {
-    filterProducts(brands) {
-      // Check all of the products if it contains the selected brand or not
-      if (brands.length > 0) {
-        this.filtered.length = 0;
-        this.products.forEach((prod) => {
-          for (let i in brands) {
-            if (prod["brand"] === brands[i]) {
+    filterProducts(filters) {
+      // Make filtered products list empty
+      this.filtered.length = 0;
+
+      this.products.forEach((prod) => {
+        // Check if any filter exist
+        if (filters.brand) {
+          if (filters.brand.includes(prod.brand)) {
+            // Check if the product haven't be added before, then push it
+            if (this.filtered.indexOf(prod) === -1) {
               this.filtered.push(prod);
             }
           }
-        });
-      } else {
-        // check if nothing selected, show all products
+        }
+        if (filters.adsType) {
+          if (filters.adsType.includes(prod.adsType)) {
+            if (this.filtered.indexOf(prod) === -1) {
+              this.filtered.push(prod);
+            }
+          }
+        }
+      });
+      if (this.filtered.length === 0) {
         this.filtered = [...this.products];
       }
     },

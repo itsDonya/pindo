@@ -1,5 +1,5 @@
 <template>
-  <base-filter class="test" @click="toggleModal">برند</base-filter>
+  <base-filter @click="toggleModal">برند</base-filter>
   <!-- Brands modal  -->
   <transition>
     <keep-alive>
@@ -45,14 +45,9 @@
             <label for="javan" class="option-title">جوان</label>
           </div>
         </div>
-        <router-link
-          :to="{ path: '/foodstuff', query: { brand: this.selectedBrands } }"
-          @click="filterBrand"
-          id="brand-submit"
-          class="modal-button"
-        >
+        <button @click="filterBrand" id="brand-submit" class="modal-button">
           فیلتر کن
-        </router-link>
+        </button>
       </div>
     </keep-alive>
   </transition>
@@ -75,7 +70,10 @@ export default {
       this.modalOpened = !this.modalOpened;
     },
     filterBrand() {
-      this.toggleModal(), this.$emit("filter", this.selectedBrands);
+      // this.$route.query.push(brand: this.selectedBrands );
+      // this.$emit("filter");
+      this.$emit("filter", this.selectedBrands);
+      this.toggleModal();
     },
   },
 };
