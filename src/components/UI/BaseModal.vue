@@ -1,35 +1,34 @@
 <template>
   <transition>
-    <keep-alive>
-      <div class="modal" v-if="isOpened">
-        <span>{{ modalTitle }}</span>
-        <div>
-          <input
-            type="text"
-            :id="filterName + '-search'"
-            class="search-input"
-            :placeholder="'جستجوی ' + modalTitle"
-          />
-        </div>
-        <div class="options-list">
-          <label class="option" v-for="(option, i) in options" :key="i">
-            <input
-              type="checkbox"
-              :name="filterName + '-name'"
-              :value="option"
-              v-model="selectedOptions"
-            />
-            <span>{{ option }}</span>
-          </label>
-        </div>
-        <button @click="filter" class="modal-button">فیلتر کن</button>
+    <!-- <keep-alive> -->
+    <div class="modal" v-if="isOpened">
+      <span>{{ modalTitle }}</span>
+      <div>
+        <input
+          type="text"
+          :id="filterName + '-search'"
+          class="search-input"
+          :placeholder="'جستجوی ' + modalTitle"
+        />
       </div>
-    </keep-alive>
+      <div class="options-list">
+        <BaseCheckbox
+          v-for="(option, i) in options"
+          :key="i"
+          :title="option"
+          :inputName="filterName + '_name'"
+          v-model="selectedOptions"
+        />
+      </div>
+      <button @click="filter" class="modal-button">فیلتر کن</button>
+    </div>
+    <!-- </keep-alive> -->
   </transition>
 </template>
 
 <script>
 import BaseFilter from "../UI/BaseFilter.vue";
+import BaseCheckbox from "./BaseCheckbox.vue";
 export default {
   data() {
     return {
@@ -38,6 +37,7 @@ export default {
   },
   components: {
     BaseFilter,
+    BaseCheckbox,
   },
   props: {
     isOpened: {
