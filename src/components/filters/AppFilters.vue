@@ -1,7 +1,13 @@
 <template>
   <section class="relative flex items-center gap-2 w-full p-4">
-    <FilterBrand @filter="filterBrands" />
-    <FilterAdsType @filter="filterTypes" />
+    <keep-alive>
+      <component
+        v-for="(filter, i) in usedFilters"
+        :key="i"
+        :is="'Filter' + filter"
+        @filter="sendSelectedFilters"
+      ></component>
+    </keep-alive>
   </section>
 </template>
 
@@ -15,20 +21,21 @@ export default {
       filters: { brand: [], adsType: [] },
     };
   },
+  props: {
+    usedFilters: {
+      type: Array,
+      required: true,
+    },
+  },
   components: {
     FilterBrand,
     FilterAdsType,
   },
   methods: {
-    filterBrands(brands) {
-      this.filters.brand = brands;
-      this.filter();
-    },
-    filterTypes(types) {
-      this.filters.adsType = types;
-      this.filter();
-    },
-    filter() {
+    sendSelectedFilters(filters) {
+      // get the filter name to work with filters' keys (in data)
+      const filterName = Object.keys(filters)[0]; //(example = brand)
+      this.filters[filterName] = filters[filterName];
       this.$emit("filter", this.filters);
     },
   },

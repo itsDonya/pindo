@@ -30,7 +30,7 @@ export default {
       this.typeModalOpened = !this.typeModalOpened;
     },
     filterTypes(types) {
-      this.$emit("filter", types);
+      this.$emit("filter", { adsType: types });
     },
   },
 };

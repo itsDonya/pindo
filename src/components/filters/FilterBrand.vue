@@ -30,7 +30,7 @@ export default {
       this.brandModalOpened = !this.brandModalOpened;
     },
     filterBrands(brands) {
-      this.$emit("filter", brands);
+      this.$emit("filter", { brand: brands });
     },
   },
 };

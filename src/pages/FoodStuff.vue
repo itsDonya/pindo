@@ -1,5 +1,5 @@
 <template>
-  <AppFilters @filter="filterProducts" />
+  <AppFilters @filter="filterProducts" :usedFilters="filters" />
   <!-- Food products -->
   <section class="flex w-full flex-wrap items-center gap-4">
     <BaseProduct
@@ -21,6 +21,7 @@ export default {
   },
   data() {
     return {
+      filters: ["Brand", "AdsType"],
       products: [
         {
           title: "گلاب درجه یک (ماهوند)",
